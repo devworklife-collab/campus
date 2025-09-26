@@ -1,204 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Campus for Students</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        :root {
-            --primary: #1976d2;
-            --accent: #ffc107;
-            --bg: #f8fafc;
-            --card-bg: #fff;
-            --text: #202124;
-            --shadow: 0 2px 12px rgba(33, 33, 33, 0.1);
-        }
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-        }
-        header {
-            background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-            min-height: 280px;
-            color: #fff;
-            position: relative;
-        }
-        header::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(25, 118, 210, 0.6);
-        }
-        .header-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 60px 20px 40px 20px;
-        }
-        .header-content h1 {
-            font-size: 2.7rem;
-            margin: 0;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-        .header-content p {
-            font-size: 1.3rem;
-            margin: 16px 0 0 0;
-            font-weight: 400;
-        }
-        nav {
-            background: var(--primary);
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            padding: 10px 0;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 7px 16px;
-            border-radius: 4px;
-            transition: background 0.2s;
-        }
-        nav a:hover {
-            background: var(--accent);
-            color: var(--primary);
-        }
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        .cards {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            justify-content: center;
-        }
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            width: 330px;
-            transition: transform 0.15s;
-        }
-        .card:hover {
-            transform: translateY(-7px) scale(1.02);
-        }
-        .card img {
-            width: 100%;
-            height: 170px;
-            object-fit: cover;
-        }
-        .card-body {
-            padding: 18px 18px 12px 18px;
-        }
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin: 0 0 6px 0;
-        }
-        .card-text {
-            font-size: 1rem;
-            margin: 0 0 8px 0;
-        }
-        .highlight {
-            color: var(--primary);
-            font-weight: bold;
-        }
-        .join-btn {
-            background: var(--accent);
-            color: var(--primary);
-            border: none;
-            border-radius: 20px;
-            padding: 10px 22px;
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 24px auto 0 auto;
-            display: block;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(25, 118, 210, 0.11);
-            transition: background 0.2s;
-        }
-        .join-btn:hover {
-            background: #ffd740;
-        }
-        footer {
-            text-align: center;
-            color: #7a7a7a;
-            padding: 24px 0 12px 0;
-            font-size: 1rem;
-            background: #e3f0ff;
-            margin-top: 60px;
-        }
-        @media (max-width: 900px) {
-            .cards {
-                flex-direction: column;
-                align-items: center;
-            }
-            .container {
-                padding: 0 8px;
-            }
-        }
-    </style>
-    <meta name="google-adsense-account" content="ca-pub-2099235078117992">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cross-Doc — PDF & Image Converter</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Libraries (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://unpkg.com/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1>Welcome to Campus</h1>
-            <p>Your Gateway to Excellence in Education and Campus Life!</p>
-        </div>
+  <div class="app">
+    <header class="topbar">
+      <div class="logo">Cross-Doc</div>
+      <nav>
+        <button class="tool-btn active" data-tool="merge">Merge</button>
+        <button class="tool-btn" data-tool="split">Split</button>
+        <button class="tool-btn" data-tool="pdf2img">PDF → Images</button>
+        <button class="tool-btn" data-tool="img2pdf">Images → PDF</button>
+        <button class="tool-btn" data-tool="compress">Compress</button>
+        <button class="tool-btn" data-tool="rotate">Rotate</button>
+        <button class="tool-btn" data-tool="reorder">Reorder</button>
+        <button class="tool-btn" data-tool="ocr">OCR</button>
+      </nav>
+      <div class="spacer"></div>
+      <div class="help">Client-only demo • Files never leave your machine</div>
     </header>
-    <nav>
-        <a href="#about">About</a>
-        <a href="#facilities">Facilities</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#admissions">Admissions</a>
-        <a href="#contact">Contact</a>
-    </nav>
-    <div class="container">
-        <section id="about">
-            <h2>About Our Campus</h2>
-            <p>
-                Located in the heart of India, our campus is a vibrant hub for students to <span class="highlight">learn</span>, <span class="highlight">innovate</span> and <span class="highlight">grow</span>. We blend   traditions with modern education to prepare you for a successful future.
-            </p>
-        </section>
-        <section id="facilities">
-            <h2>Campus Facilities</h2>
-            <div class="cards">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="Library">
-                    <div class="card-body">
-                        <div class="card-title">Central Library</div>
-                        <div class="card-text">Thousands of books, e-resources, and a peaceful reading area.</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=600&q=80" alt="IT Lab">
-                    <div class="card-body">
-                        <div class="card-title">IT & Science Labs</div>
-                        <div class="card-text">State-of-the-art labs for practical learning and research.</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=600&q=80" alt="Sports">
-                    <div class="card-body">
-                        <div class="card-title">Sports Complex</div>
-                        <div class="card-text">Cricket, football, basketball, and a modern gymnasium.</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80" alt="Cafeteria">
-                    <div class="card-body">
-                        <div class="card-title">Cafeteria</div>
-                        <div class="card-text">Enjoy delicious   and continental food at our hygienic canteen.</div>
-                    </div>
-                </div>
-            </div>
-        </
 
+    <main class="main">
+      <aside class="left">
+        <div class="uploader" id="uploader">
+          <input id="fileInput" type="file" accept=".pdf,image/*" multiple />
+          <div class="dropzone" id="dropzone">
+            <div class="drop-inner">
+              <strong>Drag & drop files here</strong>
+              <span>or click to select PDFs / images</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="options" id="options">
+          <div class="option-row">
+            <label>Output image format</label>
+            <select id="outImgFormat">
+              <option value="image/jpeg">JPG (smaller)</option>
+              <option value="image/png">PNG</option>
+            </select>
+          </div>
+          <div class="option-row">
+            <label>Image quality (0.2–1.0)</label>
+            <input id="imgQuality" type="range" min="0.2" max="1" step="0.05" value="0.9" />
+            <span id="imgQualityVal">0.90</span>
+          </div>
+          <div class="option-row" id="compressOptions" style="display:none;">
+            <label>Max width (px)</label>
+            <input id="maxWidth" type="number" min="200" max="4000" step="50" value="1600" />
+          </div>
+          <div class="option-row">
+            <label>Pages (split/extract)</label>
+            <input id="pageRange" type="text" placeholder="e.g. 1-3,5" />
+            <small>Use ranges/comma list. Empty = all pages</small>
+          </div>
+          <div class="option-row">
+            <button id="runBtn" class="primary">Run</button>
+            <button id="clearBtn" class="secondary">Clear</button>
+          </div>
+        </div>
+
+        <div class="log" id="log" aria-live="polite">Ready.</div>
+      </aside>
+
+      <section class="right">
+        <div class="panel">
+          <h2>Files</h2>
+          <div id="fileList" class="file-list"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Preview & Results</h2>
+          <div id="preview" class="preview-area">No result yet.</div>
+          <div id="results" class="results-area"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>Made with ❤️ — Client-side demo. For production, I recommend a Node/Express backend for large files & advanced compression.</div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
